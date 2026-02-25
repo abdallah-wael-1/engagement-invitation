@@ -242,7 +242,7 @@ const HeroSection = () => (
 const DetailsSection = () => {
   const details = [
     { icon: Calendar, label: "Date", value: "March 24, 2026", sub: "Tuesday", link: null },
-    { icon: Clock, label: "Time", value: "7:30 PM", sub: "Doors open at 7:00 PM", link: null },
+    { icon: Clock, label: "Time", value: "7:00 PM", sub: "Doors open at 7:00 PM", link: null },
     { icon: MapPin, label: "Location", value: "Rivera", sub: "Badrashin, Giza", link: "https://maps.app.goo.gl/acyXCUUHUgdjaxT98" },
   ];
   return (
