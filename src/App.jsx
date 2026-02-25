@@ -1,6 +1,16 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, Sparkles, Calendar, MapPin, Clock, PartyPopper, Gem } from "lucide-react";
+import { Heart, Sparkles, Calendar, MapPin, Clock, PartyPopper, Gem, ExternalLink } from "lucide-react";
+
+/* ─── Inject Pinyon Script font ─── */
+const FontStyle = () => (
+  <style>{`
+    @import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap');
+    .font-script { 
+      font-family: 'Pinyon Script', cursive !important;
+    }
+  `}</style>
+);
 const colors = {
   bg: "hsl(20, 30%, 98%)",
   bgSoft: "linear-gradient(180deg, hsl(20, 30%, 98%), hsl(350, 40%, 95%))",
@@ -132,7 +142,7 @@ const IntroAnimation = ({ onComplete }) => {
           style={{ marginTop: 24, textAlign: "center" }}
         >
           <h1 className="font-script text-gradient-romantic" style={{ fontSize: "clamp(2.5rem, 6vw, 3.75rem)" }}>
-            Nouran & Ahmed
+            Ahmed &amp; Nouran
           </h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -188,14 +198,14 @@ const HeroSection = () => (
         The Engagement of
       </motion.p>
 
-      {/* Nouran - padding top to prevent crop */}
+      {/* Ahmed - first */}
       <motion.h1
         initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.2, delay: 0.8, type: "spring", stiffness: 100 }}
         className="font-script text-gradient-romantic"
         style={{ fontSize: "clamp(4rem, 12vw, 10rem)", lineHeight: 1.15, marginBottom: 8, paddingTop: 16 }}
       >
-        Nouran
+        Ahmed
       </motion.h1>
 
       {/* Heart divider */}
@@ -210,14 +220,14 @@ const HeroSection = () => (
         <div style={{ height: 1, width: 64, background: colors.gradientRomantic }} />
       </motion.div>
 
-      {/* Ahmed */}
+      {/* Nouran - second */}
       <motion.h1
         initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.2, delay: 1.4, type: "spring", stiffness: 100 }}
         className="font-script text-gradient-romantic"
         style={{ fontSize: "clamp(4rem, 12vw, 10rem)", lineHeight: 1.15, marginBottom: 32 }}
       >
-        Ahmed
+        Nouran
       </motion.h1>
 
       {/* Quote */}
@@ -231,16 +241,16 @@ const HeroSection = () => (
 /* ─── Event Details ─── */
 const DetailsSection = () => {
   const details = [
-    { icon: Calendar, label: "Date", value: "March 24, 2026", sub: "Tuesday" },
-    { icon: Clock, label: "Time", value: "7:30 PM", sub: "Doors open at 7:00 PM" },
-    { icon: MapPin, label: "Location", value: "Rivera", sub: "Badrashin, Giza" },
+    { icon: Calendar, label: "Date", value: "March 24, 2026", sub: "Tuesday", link: null },
+    { icon: Clock, label: "Time", value: "7:30 PM", sub: "Doors open at 7:00 PM", link: null },
+    { icon: MapPin, label: "Location", value: "Rivera", sub: "Badrashin, Giza", link: "https://maps.app.goo.gl/acyXCUUHUgdjaxT98" },
   ];
   return (
     <section style={{ position: "relative", padding: "30px 0", overflow: "hidden", background: colors.cream }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 16px", position: "relative", zIndex: 10 }}>
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}
           style={{ textAlign: "center", marginBottom: 64 }}>
-          <span className="font-script" style={{ fontSize: "2.25rem", color: colors.primary, display: "block", marginBottom: 16 }}>Save the Date</span>
+          <span className="font-script" style={{ fontSize: "2.25rem", color: colors.primary, display: "block", marginBottom: 16 }}>Save The Date</span>
           <h2 className="font-display" style={{ fontSize: "clamp(1.5rem, 4vw, 2.25rem)", color: colors.foreground }}> Details</h2>
         </motion.div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: 32, maxWidth: 900, margin: "0 auto" }}>
@@ -251,7 +261,22 @@ const DetailsSection = () => {
               whileHover={{ y: -8, scale: 1.03 }}
               style={{ textAlign: "center" }}
             >
-              <div style={{ borderRadius: 16, padding: 32, boxShadow: colors.shadowSoft, background: colors.bg, border: `1px solid ${colors.border}`, transition: "all 0.5s" }}>
+              <div
+                onClick={() => d.link && window.open(d.link, "_blank")}
+                style={{
+                  borderRadius: 16, padding: 32, boxShadow: colors.shadowSoft, background: colors.bg,
+                  border: `1px solid ${d.link ? colors.primary : colors.border}`,
+                  transition: "all 0.5s",
+                  cursor: d.link ? "pointer" : "default",
+                  position: "relative",
+                }}
+              >
+                {d.link && (
+                  <div style={{ position: "absolute", top: 12, right: 12, display: "flex", alignItems: "center", gap: 4 }}>
+                    <ExternalLink style={{ width: 14, height: 14, color: colors.primary }} />
+                    <span className="font-body" style={{ fontSize: "0.7rem", color: colors.primary, letterSpacing: "0.05em" }}>Open Maps</span>
+                  </div>
+                )}
                 <motion.div
                   style={{ width: 64, height: 64, margin: "0 auto 24px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", background: colors.gradientRomantic, boxShadow: colors.shadowGlow }}
                   whileHover={{ rotate: 360 }} transition={{ duration: 0.8 }}
@@ -298,7 +323,7 @@ const CountdownSection = () => {
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 16px", position: "relative", zIndex: 10, textAlign: "center" }}>
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
           <span className="font-script" style={{ fontSize: "2.25rem", color: colors.primary, display: "block", marginBottom: 16 }}>Counting Down</span>
-          <h2 className="font-display" style={{ fontSize: "clamp(1.5rem, 4vw, 2.25rem)", color: colors.foreground, marginBottom: 48 }}>Until the Big Day</h2>
+          <h2 className="font-display" style={{ fontSize: "clamp(1.5rem, 4vw, 2.25rem)", color: colors.foreground, marginBottom: 48 }}>Until The Big Day</h2>
         </motion.div>
         <div style={{ display: "flex", justifyContent: "center", gap: "clamp(12px, 3vw, 32px)", flexWrap: "wrap" }}>
           {units.map((u, i) => (
@@ -332,7 +357,7 @@ const QuoteSection = () => (
         </p>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16 }}>
           <div style={{ height: 1, width: 80, background: colors.gradientRomantic }} />
-          <span className="font-script" style={{ fontSize: "1.875rem", color: colors.primary }}>N & A</span>
+          <span className="font-script" style={{ fontSize: "1.875rem", color: colors.primary }}>A &amp; N</span>
           <div style={{ height: 1, width: 80, background: colors.gradientRomantic }} />
         </div>
       </motion.div>
@@ -346,17 +371,16 @@ const FooterComp = () => (
       <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
         <PartyPopper style={{ width: 40, height: 40, margin: "0 auto 16px", color: colors.gold }} />
         <h2 className="font-script text-gradient-romantic" style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)", marginBottom: 16 }}>
-          We Can't Wait to Celebrate with You!
+          We Can't Wait To Celebrate With You!
         </h2>
         <p className="font-body" style={{ color: colors.muted, fontSize: "1.125rem", marginBottom: 32 }}>
           Your presence will make our special day even more magical
         </p>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12 }}>
-          <span className="font-body" style={{ color: colors.muted }}>Made with</span>
+          <span className="font-body" style={{ color: colors.muted }}>Made with love</span>
           <motion.div animate={{ scale: [1, 1.3, 1] }} transition={{ duration: 1.5, repeat: Infinity }}>
             <Heart style={{ width: 20, height: 20, color: colors.primary, fill: colors.primary }} />
           </motion.div>
-          <span className="font-body" style={{ color: colors.muted }}>and lots of love</span>
         </div>
       </motion.div>
     </div>
@@ -369,6 +393,7 @@ function App() {
   const [showIntro, setShowIntro] = useState(true);
   return (
     <div style={{ position: "relative", minHeight: "100vh", overflowX: "hidden" }}>
+      <FontStyle />
       <AnimatePresence>
         {showIntro && <IntroAnimation onComplete={() => setShowIntro(false)} />}
       </AnimatePresence>
