@@ -241,7 +241,7 @@ const DetailsSection = () => {
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}
           style={{ textAlign: "center", marginBottom: 64 }}>
           <span className="font-script" style={{ fontSize: "2.25rem", color: colors.primary, display: "block", marginBottom: 16 }}>Save the Date</span>
-          <h2 className="font-display" style={{ fontSize: "clamp(1.5rem, 4vw, 2.25rem)", color: colors.foreground }}>Event Details</h2>
+          <h2 className="font-display" style={{ fontSize: "clamp(1.5rem, 4vw, 2.25rem)", color: colors.foreground }}> Details</h2>
         </motion.div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: 32, maxWidth: 900, margin: "0 auto" }}>
           {details.map((d, i) => (
